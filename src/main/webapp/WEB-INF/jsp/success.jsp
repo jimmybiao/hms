@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<%
+	pageContext.setAttribute("basePath", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort());
+ %>
 <title>Success</title>
 <style>
 		.inputdiv{
@@ -23,7 +26,7 @@
 			<tr height="50px"><td colspan="3"></td></tr>
 			<tr><td colspan="3" align="center"><font size="6">操作成功！</font></td></tr>
 			<tr><td colspan="3" height="50px"></td></tr>
-			<tr><td colspan="3" align="center"><a href="index.jsp"><font size="6">返回首页</font></a></td></tr>
+			<tr><td colspan="3" align="center"><a href="${basePath }/index.jsp"><font size="6">返回首页</font></a></td></tr>
 			</table>
 			</div>
 

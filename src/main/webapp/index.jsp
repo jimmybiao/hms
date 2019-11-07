@@ -81,25 +81,67 @@
 		</tr>
 	</table>
 	<hr/>
+	<form action='${ctp}/memoDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
 	<div id="displayMemos" align="left" style="margin-left:80px" ></div>
+	</form>
 	</div>
 </body>
 
 <script type="text/javascript">
 	$('#query').click(	
 		function(){
+			var dtData=$("#dt").val();
+			if(dtData==null)
+				dtData="";
 			$.ajax({
 				url:"${ctp}/ajaxQueryMemos",
 				type:"POST",
-				data: {q:$("#dt").val()},
+				data: {q:dtData},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);
 					$("#displayMemos").empty();
 					$.each(data,function(index,item){
-						$("#displayMemos").append("<div><b>Title:</b><font color='blue'> "+item.title+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>  <b>Remark:</b> <font color='blue'>"+item.remark+"</font></div><br/>");
+						$("#displayMemos").append("<div><input type='checkbox' name='memoDel' value='"+item.id+"'/><b>Title:</b><font color='blue'> "+item.title+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>  <b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/memoEdit/"+item.id+"'>Edit</a><br/>");
 					}					
 					);
+				}
+			});
+			return false;
+		}
+	);
+</script>
+
+<script type="text/javascript">
+	$('#del').click(	
+		function(){
+			var dels=[];
+			$('input[name=memoDel]:checked').each(
+				function(i){
+					dels[i]=$(this).val();
+				}
+			);
+			if(dels.length==0){
+				alert("No item is checked!");
+				return false;
+			}
+			var dtData=$("#dt").val();
+			if(dtData==null)
+				dtData="";
+			$.ajax({
+				url:"${ctp}/ajaxDelMemo",
+				type:"POST",
+				data:{d:JSON.stringify(dels),q:dtData},
+				dataType:"JSON",
+				success:function(data){
+					//console.log(data);
+					$("#displayMemos").empty();
+					//$("#displayMemos").append("<form action='${ctp}/memoDel' method='post'><input type='submit' value='Delete'/>")
+					$.each(data,function(index,item){
+						$("#displayMemos").append("<div><input type='checkbox' name='memoDel' value='"+item.id+"'/><b>Title:</b><font color='blue'> "+item.title+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>  <b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/memoEdit/"+item.id+"'>Edit</a></div><br/>");
+					}					
+					);
+					//$("#displayMemos").append("</form>")
 				}
 			});
 			return false;

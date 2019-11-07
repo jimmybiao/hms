@@ -22,9 +22,30 @@ public class MemoService {
 		memoDao.addMemo(memo);
 	}
 	
-	@Transactional(propagation=Propagation.REQUIRED)
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
 	public List<Memo> getMemos(DateTime memoDate) throws Exception{
 		
 		return memoDao.getMemo(memoDate);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public List<Memo> getAllMemos() throws Exception{
+		return memoDao.getAllMemos();
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public Memo getMemo(Integer id) {
+		Memo memo=memoDao.getMemo(id);
+		return memo;
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void updateMemo(Integer id, Memo memo) {
+		memoDao.updateMemo(id,memo);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void deleteMemo(List<Integer> ids) {
+		memoDao.deleteMemo(ids);
 	}
 }
