@@ -26,7 +26,10 @@
 			<tr height="50px"><td colspan="3"></td></tr>
 			<tr><td colspan="3" align="center"><font size="6">操作成功！</font></td></tr>
 			<tr><td colspan="3" height="50px"></td></tr>
-			<tr><td colspan="3" align="center"><a href="${basePath }/index.jsp"><font size="6">返回首页</font></a></td></tr>
+			<tr>
+			<td  align="center"><a href="${basePath }/index.jsp"><font size="6">首页</font></a></td>
+			<td  align="center"><a href="${basePath }/investment"><font size="6">投资</font></a></td>
+			</tr>
 			</table>
 			</div>
 

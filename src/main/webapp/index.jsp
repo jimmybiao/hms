@@ -35,8 +35,9 @@
 				<td colspan="3" align="center"><font size="10">Home
 						Management System</font></td>
 			</tr>
-			<tr>
-				<td colspan="3" height="50">
+			<tr height="80">
+				<td><a href="investment">Investment</a></td>
+				<td colspan="2" ></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Title:</b></td>
