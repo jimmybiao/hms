@@ -25,4 +25,16 @@ public class InvestmentService {
 	public List<Investment> getInvestments(String qDate, String cat, String subcat) {
 		return investmentDao.getInvestments(qDate,cat,subcat);
 	}
+
+	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
+	public Investment getInvestment(Integer id) {
+		
+		return investmentDao.getInvestment(id);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public void updateInvestment(Integer id, Investment investment) {
+
+		investmentDao.updateInvestment(id,investment);
+	}
 }

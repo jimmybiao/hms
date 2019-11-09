@@ -59,4 +59,17 @@ public class InvestmentDao {
 		
 		return investList;
 	}
+
+	public Investment getInvestment(Integer id) {
+		String sqlGet="select id,invest_category,invest_subcategory,amount,remark,invest_date from investment where id=?";
+		List<Investment> lst=jdbcTemplate.query(sqlGet, new InvestmentRowMapper(),id);
+		if(lst.size()>0)
+			return lst.get(0);
+		return null;
+	}
+
+	public void updateInvestment(Integer id, Investment investment) {
+		String sqlUpdate="update investment set invest_category=?,invest_subcategory=?,amount=?,remark=?,updated_date=now() where id=?";
+		jdbcTemplate.update(sqlUpdate, investment.getInvestCategory(),investment.getInvestSubCategory(),investment.getAmount(),investment.getRemark(),id);
+	}
 }

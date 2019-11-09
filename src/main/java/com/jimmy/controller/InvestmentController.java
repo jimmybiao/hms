@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.jimmy.pojo.Investment;
@@ -69,8 +71,34 @@ public class InvestmentController {
 		return null;
 	}
 	
-	@RequestMapping("/investmentEdit")
-	public String editInvestment() {
-		return null;
+	@RequestMapping("/investmentEdit/{id}")
+	public ModelAndView editInvestment(@PathVariable("id") Integer id) {
+		ModelAndView mv=new ModelAndView("investmentEdit");
+		Investment investment=investmentService.getInvestment(id);
+		mv.addObject("id", investment.getId());
+		mv.addObject("sub", investment.getInvestCategory());
+		mv.addObject("subcat", investment.getInvestSubCategory());
+		mv.addObject("amt", investment.getAmount());
+		mv.addObject("remark", investment.getRemark());
+		return mv;
+	}
+	
+	@RequestMapping("/investmentUpdate/{id}")
+	@ResponseBody
+	public String updateInvestment(@PathVariable("id") Integer id,HttpServletRequest request) {
+		Investment investment=new Investment();
+		String cat=request.getParameter("cat");
+		System.out.println("cat: "+cat);
+		String subcat=request.getParameter("subcat");
+		Double amt=Double.parseDouble(request.getParameter("amt"));
+		String remark=request.getParameter("re");
+		investment.setInvestCategory(cat);
+		investment.setInvestSubCategory(subcat);
+		investment.setAmount(amt);
+		investment.setRemark(remark);
+		System.out.println("updateInvestment: "+investment);
+		investmentService.updateInvestment(id,investment);
+		Gson json=new Gson();
+		return json.toJson(investment);
 	}
 }
