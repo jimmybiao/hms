@@ -1,7 +1,5 @@
 package com.jimmy.pojo;
 
-import org.joda.time.DateTime;
-
 public class Investment {
 
 	private Integer id;
@@ -9,8 +7,8 @@ public class Investment {
 	private String investSubCategory;
 	private double amount;
 	private String remark;
-	private DateTime investDate;
-	private DateTime updatedDate;
+	private String investDate;
+	private String updatedDate;
 	
 	public Integer getId() {
 		return id;
@@ -42,16 +40,16 @@ public class Investment {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public DateTime getInvestDate() {
+	public String getInvestDate() {
 		return investDate;
 	}
-	public void setInvestDate(DateTime investDate) {
+	public void setInvestDate(String investDate) {
 		this.investDate = investDate;
 	}
-	public DateTime getUpdatedDate() {
+	public String getUpdatedDate() {
 		return updatedDate;
 	}
-	public void setUpdatedDate(DateTime updatedDate) {
+	public void setUpdatedDate(String updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 	

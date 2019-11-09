@@ -1,13 +1,12 @@
 package com.jimmy.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.swing.plaf.synth.SynthSeparatorUI;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,7 +34,7 @@ public class InvestmentController {
 		investment.setInvestCategory(category);
 		investment.setInvestSubCategory(subcategory);
 		investment.setAmount(Double.parseDouble(amount));
-		investment.setInvestDate(DateTimeFormat.forPattern("yyyy-MM-dd").parseDateTime(investDt));
+		investment.setInvestDate(investDt);
 		investment.setRemark(remark);
 
 		investmentService.addInvestment(investment);
@@ -48,5 +47,30 @@ public class InvestmentController {
 	@RequestMapping("/investment")
 	public String showInvestment() {
 		return "investment";
+	}
+	
+	@RequestMapping("/ajaxQueryInvestments")
+	@ResponseBody
+	public String getAllInvestments(@RequestParam("dt") String qDate,@RequestParam("cat") String cat,@RequestParam("subcat") String subcat) {
+		List<Investment> investList=new ArrayList<Investment>();
+		Gson json=new Gson();
+		
+		investList=investmentService.getInvestments(qDate,cat,subcat);
+		
+		for(int i=0;i<investList.size();i++)
+			System.out.println(investList.get(i));
+		
+		return json.toJson(investList);
+	}
+	
+	@RequestMapping("/investmentDel")
+	public String delInvestment() {
+		
+		return null;
+	}
+	
+	@RequestMapping("/investmentEdit")
+	public String editInvestment() {
+		return null;
 	}
 }

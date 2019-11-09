@@ -93,6 +93,49 @@
 	</form>
 	</div>
 	<div id="info" align="center"></div>
+		<hr/>
+	<div>
+	<table width="800px" align="center">
+		<tr>
+			<td colspan="3" align="center"><b>Query</b> </td>
+		</tr>
+		<tr>
+			<td>Input date(yyyy-MM-dd):</td>
+			<td><input type="text" name="querydt" id="querydt" onfocus="createTime();"/></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>Category:</td>
+			<td>
+				<select id="querycat" >
+					<option value=""></option>
+					<option value="Pension Fund">Pension Fund</option>
+					<option value="Education Fund">Education Fund</option>
+				</select>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>SubCategory:</td>
+			<td>
+				<select id="querysubcat">
+					<option value=""></option>
+					<option value="Money Fund">Money Fund</option>
+					<option value="Bond Fund">Bond Fund</option>
+					<option value="Stock Fund">Stock Fund</option>
+					<option value="Stock">Stock</option>
+					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
+					<option value="Gold Fund">Gold Fund</option>
+				</select>
+			</td>
+			<td><input type="button" id="query" value="query"></td>
+		</tr>
+	</table>
+	<hr/>
+	<form action='${ctp}/investmentDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
+	<div id="displayInvestments" align="left" style="margin-left:80px" ></div>
+	</form>
+	</div>
 </body>
 <script type="text/javascript">
 	$('#submit').click(	
@@ -127,6 +170,38 @@
 				error:function(jqXHR, textStatus, errorThrown){
 					$("#info").empty();
 					$("#info").append("<span>Record failed to save!</span>");
+				}
+			});
+			return false;
+		}
+	);
+</script>
+
+<script type="text/javascript">
+	$('#query').click(	
+		function(){
+			var dtData=$("#querydt").val();
+			if(dtData==null)
+				dtData="";
+			var catData=$("#querycat option:selected").val();
+			if(catData==null)
+				catData="";
+			var subcatData=$("#querysubcat option:selected").val();
+			if(subcatData==null)
+				subcatData="";
+				
+			$.ajax({
+				url:"${ctp}/ajaxQueryInvestments",
+				type:"POST",
+				data: {dt:dtData,cat:catData,subcat:subcatData},
+				dataType:"JSON",
+				success:function(data){
+					//console.log(data);
+					$("#displayInvestments").empty();
+					$.each(data,function(index,item){
+						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.investCategory+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.investSubCategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.investDate+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+					}					
+					);
 				}
 			});
 			return false;

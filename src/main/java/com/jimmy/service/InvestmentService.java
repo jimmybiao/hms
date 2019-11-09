@@ -1,5 +1,7 @@
 package com.jimmy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,5 +19,10 @@ public class InvestmentService {
 	@Transactional(propagation=Propagation.REQUIRED)
 	public void addInvestment(Investment investment) {
 		investmentDao.addInvestment(investment);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
+	public List<Investment> getInvestments(String qDate, String cat, String subcat) {
+		return investmentDao.getInvestments(qDate,cat,subcat);
 	}
 }
