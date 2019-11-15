@@ -27,7 +27,7 @@
  	}
  
  </script>
-<title>Investment</title>
+<title>Expense</title>
 <style>
 		.inputdiv{
 			margin:0 auto;
@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="inputdiv">
-	<form action="addNewInvestment" method="POST">
+	<form action="addNewExpense" method="POST">
 		<table align="center" border="0" width="800px">
 			<tr>
 				<td colspan="3" align="center"><font size="10">Home
@@ -46,14 +46,17 @@
 			</tr>
 			<tr height="80">
 				<td><a href="index.jsp">Index</a></td>
-				<td align="center"><a href="expense">Expense</a></td>
+				<td align="center"><a href="${ctp }/investment">Investment</a></td>
 				<td><a href="income">Income</a></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Category:</b></td>
 				<td colspan="2"><select id="category" >
-					<option value="Pension Fund">Pension Fund</option>
-					<option value="Education Fund">Education Fund</option>
+					<option value="Shared expense">Shared Expense</option>
+					<option value="Personal expense">Personal Expense</option>
+					<option value="Son expense">Son Expense</option>
+					<option value="Wife expense">Wife Expense</option>
+					<option value="Others">Others</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -62,12 +65,16 @@
 			<tr>
 				<td><b>SubCategory:</b></td>
 				<td colspan="2"><select id="subcategory">
-					<option value="Money Fund">Money Fund</option>
-					<option value="Bond Fund">Bond Fund</option>
-					<option value="Stock Fund">Stock Fund</option>
-					<option value="Stock">Stock</option>
-					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
-					<option value="Gold Fund">Gold Fund</option>
+					<option value="Grocery">Grocery</option>
+					<option value="Household goods">Household goods</option>
+					<option value="Property management fees">Property management fees</option>
+					<option value="Repairs">Repairs</option>
+					<option value="Learning">Learning</option>
+					<option value="Communications">Communications</option>
+					<option value="Investment">Investment</option>
+					<option value="Gift">Gift</option>
+					<option value="Assurance">Assurance</option>
+					<option value="Others">Others</option>
 				</select></td>
 			</tr>
 			<tr>
@@ -75,8 +82,8 @@
 				<td><input type="text" name="amount" id="amount"/></td>
 			</tr>
 			<tr>
-				<td nowrap><b>Investment Date:</b></td>
-				<td><input type="text" name="investdate" id="investdate" onfocus="createTime();"/></td>
+				<td nowrap><b>Expense Date:</b></td>
+				<td><input type="text" name="expensedate" id="expensedate" onfocus="createTime();"/></td>
 			</tr>
 			<tr>
 				<td nowrap><b>Remark:</b></td>
@@ -110,8 +117,11 @@
 			<td>
 				<select id="querycat" >
 					<option value=""></option>
-					<option value="Pension Fund">Pension Fund</option>
-					<option value="Education Fund">Education Fund</option>
+					<option value="Shared expense">Shared Expense</option>
+					<option value="Personal expense">Personal Expense</option>
+					<option value="Son expense">Son Expense</option>
+					<option value="Wife expense">Wife Expense</option>
+					<option value="Others">Others</option>
 				</select>
 			</td>
 			<td></td>
@@ -120,21 +130,25 @@
 			<td>SubCategory:</td>
 			<td>
 				<select id="querysubcat">
-					<option value=""></option>
-					<option value="Money Fund">Money Fund</option>
-					<option value="Bond Fund">Bond Fund</option>
-					<option value="Stock Fund">Stock Fund</option>
-					<option value="Stock">Stock</option>
-					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
-					<option value="Gold Fund">Gold Fund</option>
+				<option value=""></option>
+					<option value="Grocery">Grocery</option>
+					<option value="Household goods">Household goods</option>
+					<option value="Property management fees">Property management fees</option>
+					<option value="Repairs">Repairs</option>
+					<option value="Learning">Learning</option>
+					<option value="Communications">Communications</option>
+					<option value="Investment">Investment</option>
+					<option value="Gift">Gift</option>
+					<option value="Assurance">Assurance</option>
+					<option value="Others">Others</option>
 				</select>
 			</td>
 			<td><input type="button" id="query" value="query"></td>
 		</tr>
 	</table>
 	<hr/>
-	<form action='${ctp}/investmentDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
-	<div id="displayInvestments" align="left" style="margin-left:80px" ></div>
+	<form action='${ctp}/ajaxExpenseDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
+	<div id="displayExpense" align="left" style="margin-left:80px" ></div>
 	</form>
 	</div>
 </body>
@@ -148,18 +162,18 @@
 				alert("Amount不能为空！")
 				return;
 			}
-			var investdate=$("#investdate").val(); 
+			var createddate=$("#expensedate").val(); 
 			var remark=$("#remark").val();
 			if(remark==null)
 				remark="";
 			$.ajax({
-				url:"${ctp}/addNewInvestment",
+				url:"${ctp}/addNewExpense",
 				type:"POST",
-				data: {c:cat,sc:subcat,am:amt,indt:investdate,re:remark},
+				data: {c:cat,sc:subcat,am:amt,cd:createddate,re:remark},
 				dataType:"JSON",
 				success:function(data){
 					$("#amount").val("");
-					$("#investdate").val("");
+					$("#expensedate").val("");
 					$("#remark").val("");
 					$("#info").empty();
 					$("#info").append("<font color='red'>1 record saved successfully!</font></br>");	
@@ -188,15 +202,15 @@
 				subcatData="";
 				
 			$.ajax({
-				url:"${ctp}/ajaxQueryInvestments",
+				url:"${ctp}/ajaxQueryExpense",
 				type:"POST",
 				data: {dt:dtData,cat:catData,subcat:subcatData},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);
-					$("#displayInvestments").empty();
+					$("#displayExpense").empty();
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayExpense").append("<div><input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>ExpenseDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
 					}					
 					);
 				}
@@ -210,7 +224,7 @@
 	$('#del').click(	
 		function(){
 			var dels=[];
-			$('input[name=investmentDel]:checked').each(
+			$('input[name=expenseDel]:checked').each(
 				function(i){
 					dels[i]=$(this).val();
 				}
@@ -230,16 +244,16 @@
 				subcatData="";
 				
 			$.ajax({
-				url:"${ctp}/ajaxDelInvestment",
+				url:"${ctp}/ajaxDelExpense",
 				type:"POST",
 				traditional:true, 
 				data:{d:dels,dt:dtData,cat:catData,subcat:subcatData},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);
-					$("#displayInvestments").empty();
+					$("#displayExpense").empty();
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayExpense").append("<div><input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
 					}					
 					);
 				}

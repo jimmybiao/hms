@@ -18,14 +18,14 @@ public class MemoDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	 public void addMemo(Memo memo) {
+	 public void addMemo(Object[] objs) {
 		String sqlAdd="insert into memo(title,amount,remark) values(?,?,?)";
-		jdbcTemplate.update(sqlAdd, memo.getTitle(),memo.getAmount(),memo.getRemark());
+		jdbcTemplate.update(sqlAdd, objs);
 	}
 	
-	public void updateMemo(Integer id,Memo memo) {
+	public void updateMemo(Object[] objs) {
 		String sqlUpdate="update memo set title=?,amount=?,remark=?,memo_date=now() where id=?";
-		jdbcTemplate.update(sqlUpdate, memo.getTitle(),memo.getAmount(),memo.getRemark(),id);
+		jdbcTemplate.update(sqlUpdate, objs);
 	}
 	
 	public Memo getMemo(Integer id) {
@@ -60,7 +60,6 @@ public class MemoDao {
 			}
 			
 			public int getBatchSize() {
-				// TODO Auto-generated method stub
 				return ids.size();
 			}
 		});

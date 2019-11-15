@@ -27,7 +27,7 @@
  	}
  
  </script>
-<title>Investment</title>
+<title>Expense</title>
 <style>
 		.inputdiv{
 			margin:0 auto;
@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="inputdiv">
-	<form action="addNewInvestment" method="POST">
+	<form action="addNewIncome" method="POST">
 		<table align="center" border="0" width="800px">
 			<tr>
 				<td colspan="3" align="center"><font size="10">Home
@@ -46,37 +46,28 @@
 			</tr>
 			<tr height="80">
 				<td><a href="index.jsp">Index</a></td>
-				<td align="center"><a href="expense">Expense</a></td>
-				<td><a href="income">Income</a></td>
+				<td align="center"><a href="${ctp }/investment">Investment</a></td>
+				<td><a href="expense">Expense</a></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Category:</b></td>
 				<td colspan="2"><select id="category" >
-					<option value="Pension Fund">Pension Fund</option>
-					<option value="Education Fund">Education Fund</option>
+					<option value="Salary">Salary</option>
+					<option value="Investment">Investment</option>
+					<option value="Others">Others</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td colspan="3" height="10">
 			</tr>
-			<tr>
-				<td><b>SubCategory:</b></td>
-				<td colspan="2"><select id="subcategory">
-					<option value="Money Fund">Money Fund</option>
-					<option value="Bond Fund">Bond Fund</option>
-					<option value="Stock Fund">Stock Fund</option>
-					<option value="Stock">Stock</option>
-					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
-					<option value="Gold Fund">Gold Fund</option>
-				</select></td>
-			</tr>
+			
 			<tr>
 				<td><b>Amount:</b></td>
 				<td><input type="text" name="amount" id="amount"/></td>
 			</tr>
 			<tr>
-				<td nowrap><b>Investment Date:</b></td>
-				<td><input type="text" name="investdate" id="investdate" onfocus="createTime();"/></td>
+				<td nowrap><b>Income Date:</b></td>
+				<td><input type="text" name="incomedate" id="incomedate" onfocus="createTime();"/></td>
 			</tr>
 			<tr>
 				<td nowrap><b>Remark:</b></td>
@@ -110,31 +101,18 @@
 			<td>
 				<select id="querycat" >
 					<option value=""></option>
-					<option value="Pension Fund">Pension Fund</option>
-					<option value="Education Fund">Education Fund</option>
-				</select>
-			</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>SubCategory:</td>
-			<td>
-				<select id="querysubcat">
-					<option value=""></option>
-					<option value="Money Fund">Money Fund</option>
-					<option value="Bond Fund">Bond Fund</option>
-					<option value="Stock Fund">Stock Fund</option>
-					<option value="Stock">Stock</option>
-					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
-					<option value="Gold Fund">Gold Fund</option>
+					<option value="Salary">Salary</option>
+					<option value="Investment">Investment</option>
+					<option value="Others">Others</option>
 				</select>
 			</td>
 			<td><input type="button" id="query" value="query"></td>
 		</tr>
+		
 	</table>
 	<hr/>
-	<form action='${ctp}/investmentDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
-	<div id="displayInvestments" align="left" style="margin-left:80px" ></div>
+	<form action='${ctp}/ajaxIncomeDel' method='post'><span><input type='button' id ='del' value='Delete'/></span>
+	<div id="displayIncome" align="left" style="margin-left:80px" ></div>
 	</form>
 	</div>
 </body>
@@ -142,24 +120,24 @@
 	$('#submit').click(	
 		function(){
 			var cat=$("#category option:selected").val();
-			var subcat=$("#subcategory option:selected").val();
 			var amt=$("#amount").val();
 			if(amt==null || amt==""){
 				alert("Amount不能为空！")
 				return;
 			}
-			var investdate=$("#investdate").val(); 
+			var createddate=$("#incomedate").val(); 
 			var remark=$("#remark").val();
 			if(remark==null)
 				remark="";
 			$.ajax({
-				url:"${ctp}/addNewInvestment",
+				url:"${ctp}/addNewIncome",
 				type:"POST",
-				data: {c:cat,sc:subcat,am:amt,indt:investdate,re:remark},
+				//async:false,
+				data: {c:cat,am:amt,cd:createddate,re:remark},
 				dataType:"JSON",
 				success:function(data){
 					$("#amount").val("");
-					$("#investdate").val("");
+					$("#incomedate").val("");
 					$("#remark").val("");
 					$("#info").empty();
 					$("#info").append("<font color='red'>1 record saved successfully!</font></br>");	
@@ -183,20 +161,17 @@
 			var catData=$("#querycat option:selected").val();
 			if(catData==null)
 				catData="";
-			var subcatData=$("#querysubcat option:selected").val();
-			if(subcatData==null)
-				subcatData="";
-				
+							
 			$.ajax({
-				url:"${ctp}/ajaxQueryInvestments",
+				url:"${ctp}/ajaxQueryIncome",
 				type:"POST",
-				data: {dt:dtData,cat:catData,subcat:subcatData},
+				data: {dt:dtData,cat:catData},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);
-					$("#displayInvestments").empty();
+					$("#displayIncome").empty();
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayIncome").append("<div><input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
 					}					
 					);
 				}
@@ -210,7 +185,7 @@
 	$('#del').click(	
 		function(){
 			var dels=[];
-			$('input[name=investmentDel]:checked').each(
+			$('input[name=incomeDel]:checked').each(
 				function(i){
 					dels[i]=$(this).val();
 				}
@@ -225,21 +200,18 @@
 			var catData=$("#querycat option:selected").val();
 			if(catData==null)
 				catData="";
-			var subcatData=$("#querysubcat option:selected").val();
-			if(subcatData==null)
-				subcatData="";
 				
 			$.ajax({
-				url:"${ctp}/ajaxDelInvestment",
+				url:"${ctp}/ajaxDelIncome",
 				type:"POST",
 				traditional:true, 
-				data:{d:dels,dt:dtData,cat:catData,subcat:subcatData},
+				data:{d:dels,dt:dtData,cat:catData},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);
-					$("#displayInvestments").empty();
+					$("#displayIncome").empty();
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayIncome").append("<div><input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
 					}					
 					);
 				}

@@ -3,6 +3,8 @@ package com.jimmy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +25,20 @@ public class MemoController {
 	@Autowired
 	private MemoService memoService;
 
-	@RequestMapping("/memo")
-	public String addMemo(Memo memo) {
-		memoService.addMemo(memo);
-		return "success";
+	@RequestMapping("/addNewMemo")
+	@ResponseBody
+	public String addMemo(HttpServletRequest request) {
+		String title=request.getParameter("t");
+		Double amt=Double.parseDouble(request.getParameter("am"));
+		String remark=request.getParameter("re");
+		
+		Object[] objs= {title,amt,remark};
+		
+		memoService.addMemo(objs);
+		
+		Gson json=new Gson();
+		
+		return json.toJson("ok");
 	}
 	
 	@RequestMapping("/ajaxQueryMemos")
@@ -59,9 +71,17 @@ public class MemoController {
 	}
 	
 	@RequestMapping("/memoUpdate/{id}")
-	public String updateMemo(@PathVariable("id") Integer id, Memo memo) {
-		memoService.updateMemo(id,memo);
-		return "success";
+	@ResponseBody
+	public String updateMemo(@PathVariable("id") Integer id, HttpServletRequest request) {
+		String title=request.getParameter("t");
+		Double amt=Double.parseDouble(request.getParameter("amt"));
+		String remark=request.getParameter("re");
+		
+		Object[] objs= {title,amt,remark,id};
+		memoService.updateMemo(objs);
+		
+		Gson json=new Gson();
+		return json.toJson("ok");
 	}
 	
 	@RequestMapping("/ajaxDelMemo")

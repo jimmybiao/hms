@@ -37,7 +37,8 @@
 			</tr>
 			<tr height="80">
 				<td><a href="investment">Investment</a></td>
-				<td colspan="2" ></td>
+				<td align="center"><a href="expense">Expense</a></td>
+				<td><a href="income">Income</a></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Title:</b></td>
@@ -63,12 +64,13 @@
 				<td colspan="3" height="20">
 			</tr>
 			<tr>
-				<td colspan="3" align="center"><input type="submit"
-					value="Submit" onclick="return valid();"/></td>
+				<td colspan="3" align="center"><input type="button"
+					value="Submit" id="submit"/></td>
 			</tr>
 		</table>
 	</form>
 	</div>
+	<div align="center" id="info"></div>
 	<hr/>
 	<div>
 	<table width="800px" align="center">
@@ -87,6 +89,39 @@
 	</form>
 	</div>
 </body>
+
+<script type="text/javascript">
+	$('#submit').click(	
+		function(){
+			var title=$("#title").val();
+			var amt=$("#amount").val();
+			if(amt==null || amt.equals(""))
+				amt="0";
+			var remark=$("#remark").val();
+			if(remark==null)
+				remark="";
+			$.ajax({
+				url:"${ctp}/addNewMemo",
+				type:"POST",
+				data: {t:title,am:amt,re:remark},
+				dataType:"JSON",
+				success:function(data){
+					$("#title").val("");
+					$("#amount").val("");
+					$("#remark").val("");
+					$("#info").empty();
+					$("#info").append("<font color='red'>1 record saved successfully!</font></br>");	
+				},
+				error:function(jqXHR, textStatus, errorThrown){
+					$("#info").empty();
+					$("#info").append("<span>Record failed to save!</span>");
+				}
+			});
+			return false;
+		}
+	);
+</script>
+
 
 <script type="text/javascript">
 	$('#query').click(	

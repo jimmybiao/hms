@@ -30,11 +30,11 @@
 			position:relative;
 		}
 </style>
-<title>Investment Edit</title>
+<title>Income Edit</title>
 </head>
 <body>
 <div class="inputdiv">
-	<form action="${ctp}/investmentUpdate/${requestScope.id}" method="POST">
+	<form action="${ctp}/incomeUpdate/${requestScope.id}" method="POST">
 		<table align="center" border="0" width="800px">
 			<tr>
 				<td colspan="3" align="center"><font size="10">Home
@@ -42,33 +42,28 @@
 			</tr>
 			<tr height="80">
 				<td><a href="index.jsp">Index</a></td>
-				<td><a href="${basePath}/investment">Investment</a></td>
-				<td></td>
+				<td align="center"><a href="${basePath}/investment">Investment</a></td>
+				<td><a href="${basePath}/income">Income</a></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Category:</b></td>
 				<td colspan="2"><select id="category" >
-					<option value="Pension Fund">Pension Fund</option>
-					<option value="Education Fund">Education Fund</option>
+					<option value="Salary">Salary</option>
+					<option value="Investment">Investment</option>
+					<option value="Others">Others</option>
 				</select></td>
 			</tr>
 			<tr>
 				<td colspan="3" height="10">
 			</tr>
-			<tr>
-				<td><b>SubCategory:</b></td>
-				<td colspan="2"><select id="subcategory">
-					<option value="Money Fund">Money Fund</option>
-					<option value="Bond Fund">Bond Fund</option>
-					<option value="Stock Fund">Stock Fund</option>
-					<option value="Stock">Stock</option>
-					<option value="Bulk Commodity Fund">Bulk Commodity Fund</option>
-					<option value="Gold Fund">Gold Fund</option>
-				</select></td>
-			</tr>
+			
 			<tr>
 				<td><b>Amount:</b></td>
 				<td><input type="text" name="amount" id="amount" value="${requestScope.amt} "/></td>
+			</tr>
+			<tr>
+			<td><b>Created Time:</b></td>
+			<td colspan="2"><label>${requestScope.dt}</label></td>
 			</tr>
 			
 			<tr>
@@ -89,15 +84,13 @@
 	<div id="info" align="center"></div>
 </body>
 <script>
-$("#category").val("${requestScope.sub}");
-$("#subcategory").val("${requestScope.subcat}")
+$("#category").val("${requestScope.cat}");
 </script>
 
 <script type="text/javascript">
 	$('#update').click(	
 		function(){
 			var catData=$("#category option:selected").val();
-			var subcatData=$("#subcategory option:selected").val();
 			var amount=$("#amount").val();
 			if(amount=='' || $.trim(amount)==''){
 				alert('Amount不能为空！');
@@ -110,9 +103,9 @@ $("#subcategory").val("${requestScope.subcat}")
  				
  			var remark= $("#remark").val();
 			$.ajax({
-				url:"${ctp}/investmentUpdate/${requestScope.id}",
+				url:"${ctp}/incomeUpdate/${requestScope.id}",
 				type:"POST",
-				data:{cat:catData,subcat:subcatData,amt:amount,re:remark},
+				data:{cat:catData,amt:amount,re:remark},
 				dataType:"JSON",
 				success:function(data){
 					//console.log(data);

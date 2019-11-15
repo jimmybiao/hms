@@ -7,7 +7,8 @@
 <%
 	pageContext.setAttribute("ctp", request.getContextPath());
 	pageContext.setAttribute("basePath", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort());
-%>
+ %>
+<script type="text/javascript" src="${basePath }/js/jquery-2.1.4.js"></script>
 <script type="text/javascript">
 	function valid() {
 		var val = $("#title").val();
@@ -48,7 +49,7 @@
 				</tr>
 				<tr>
 					<td><b>Amount:</b></td>
-					<td colspan="2"><input type="text" name="amount"
+					<td colspan="2"><input type="text" name="amount" id="amount"
 						value="${requestScope.amount} " /></td>
 				</tr>
 				<tr>
@@ -63,13 +64,44 @@
 					<td colspan="3" height="20">
 				</tr>
 				<tr>
-					<td colspan="3" align="center"><input type="submit"
-						value="Submit" onclick="return valid();" /></td>
+					<td colspan="3" align="center"><input type="button"
+						value="Submit" id="update" /></td>
 				</tr>
 			</table>
 		</form>
 	</div>
+	<div id="info" align="center"></div>
 	<hr />
 
 </body>
+
+<script type="text/javascript">
+	$('#update').click(	
+		function(){
+			var title=$("#title").val();
+			var amount=$("#amount").val();
+			if(amount=='' || $.trim(amount)==''){
+				amount="0"
+ 			}
+ 				
+ 			var remark= $("#remark").val();
+			$.ajax({
+				url:"${ctp}/memoUpdate/${requestScope.id}",
+				type:"POST",
+				data:{t:title,amt:amount,re:remark},
+				dataType:"JSON",
+				success:function(data){
+					//console.log(data);
+					$("#info").empty();
+					$("#info").append("<font color='red'>The record has been updated successfully!</font>");			
+				},
+				error:function(jqXHR, textStatus, errorThrown){
+					$("#info").empty();
+					$("#info").append("<font color='red'>The record failed to save!</font>");
+				}
+			});
+			return false;
+		}
+	);
+</script>
 </html>

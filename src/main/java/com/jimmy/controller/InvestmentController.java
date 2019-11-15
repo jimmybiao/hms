@@ -28,28 +28,23 @@ public class InvestmentController {
 	public String addNewInvestment(HttpServletRequest request) {
 		String category = request.getParameter("c");
 		String subcategory = request.getParameter("sc");
-		String amount = request.getParameter("am");
+		Double amount =Double.parseDouble( request.getParameter("am"));
 		String investDt = request.getParameter("indt");
 		String remark = request.getParameter("re");
 
-		Investment investment = new Investment();
-		investment.setInvestCategory(category);
-		investment.setInvestSubCategory(subcategory);
-		investment.setAmount(Double.parseDouble(amount));
-		investment.setInvestDate(investDt);
-		investment.setRemark(remark);
+		Object[] params= {category,subcategory,amount,investDt,remark};
 
-		investmentService.addInvestment(investment);
+		investmentService.addInvestment(params);
 		
 		Gson json=new Gson();
 
-		return json.toJson(investment);
+		return json.toJson("ok");
 	}
 
-	@RequestMapping("/investment")
-	public String showInvestment() {
-		return "investment";
-	}
+//	@RequestMapping("/investment")
+//	public String showInvestment() {
+//		return "investment";
+//	}
 	
 	@RequestMapping("/ajaxQueryInvestments")
 	@ResponseBody
@@ -59,16 +54,25 @@ public class InvestmentController {
 		
 		investList=investmentService.getInvestments(qDate,cat,subcat);
 		
-		for(int i=0;i<investList.size();i++)
-			System.out.println(investList.get(i));
-		
 		return json.toJson(investList);
 	}
 	
-	@RequestMapping("/investmentDel")
-	public String delInvestment() {
+	@RequestMapping("/ajaxDelInvestment")
+	@ResponseBody
+	public String delInvestment(HttpServletRequest request) {
+		List<Integer> idints=new ArrayList<Integer>();
+		String[] ids=request.getParameterValues("d");
+		if(ids.length>0) {			
+			for(String id:ids)
+				idints.add(Integer.parseInt(id));
+		}
+		String dt=request.getParameter("dt");
+		String cat=request.getParameter("cat");
+		String subcat=request.getParameter("subcat");
 		
-		return null;
+		Gson json=new Gson();
+		List<Investment> investments=investmentService.delInvestments(idints,dt,cat,subcat);
+		return json.toJson(investments);
 	}
 	
 	@RequestMapping("/investmentEdit/{id}")
@@ -76,8 +80,8 @@ public class InvestmentController {
 		ModelAndView mv=new ModelAndView("investmentEdit");
 		Investment investment=investmentService.getInvestment(id);
 		mv.addObject("id", investment.getId());
-		mv.addObject("sub", investment.getInvestCategory());
-		mv.addObject("subcat", investment.getInvestSubCategory());
+		mv.addObject("sub", investment.getCategory());
+		mv.addObject("subcat", investment.getSubcategory());
 		mv.addObject("amt", investment.getAmount());
 		mv.addObject("remark", investment.getRemark());
 		return mv;
@@ -88,15 +92,13 @@ public class InvestmentController {
 	public String updateInvestment(@PathVariable("id") Integer id,HttpServletRequest request) {
 		Investment investment=new Investment();
 		String cat=request.getParameter("cat");
-		System.out.println("cat: "+cat);
 		String subcat=request.getParameter("subcat");
 		Double amt=Double.parseDouble(request.getParameter("amt"));
 		String remark=request.getParameter("re");
-		investment.setInvestCategory(cat);
-		investment.setInvestSubCategory(subcat);
+		investment.setCategory(cat);
+		investment.setSubcategory(subcat);
 		investment.setAmount(amt);
 		investment.setRemark(remark);
-		System.out.println("updateInvestment: "+investment);
 		investmentService.updateInvestment(id,investment);
 		Gson json=new Gson();
 		return json.toJson(investment);

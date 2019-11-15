@@ -17,8 +17,8 @@ public class InvestmentService {
 	private InvestmentDao investmentDao;
 	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void addInvestment(Investment investment) {
-		investmentDao.addInvestment(investment);
+	public void addInvestment(Object[] params) {
+		investmentDao.addInvestment(params);
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
@@ -36,5 +36,13 @@ public class InvestmentService {
 	public void updateInvestment(Integer id, Investment investment) {
 
 		investmentDao.updateInvestment(id,investment);
+	}
+
+	@Transactional(propagation=Propagation.REQUIRED)
+	public List<Investment> delInvestments(List<Integer> ids, String dt, String cat, String subcat) {
+		System.out.println("investmentService: "+ids);
+		investmentDao.delInvestments(ids);
+		List<Investment> investments=investmentDao.getInvestments(dt, cat, subcat);
+		return investments;
 	}
 }

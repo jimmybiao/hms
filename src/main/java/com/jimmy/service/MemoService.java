@@ -18,8 +18,8 @@ public class MemoService {
 	private MemoDao memoDao;
 	
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void addMemo(Memo memo) {
-		memoDao.addMemo(memo);
+	public void addMemo(Object[] objs) {
+		memoDao.addMemo(objs);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRED,readOnly=true)
@@ -40,8 +40,8 @@ public class MemoService {
 	}
 
 	@Transactional(propagation=Propagation.REQUIRED)
-	public void updateMemo(Integer id, Memo memo) {
-		memoDao.updateMemo(id,memo);
+	public void updateMemo(Object[] objs) {
+		memoDao.updateMemo(objs);
 	}
 	
 	@Transactional(propagation=Propagation.REQUIRED)

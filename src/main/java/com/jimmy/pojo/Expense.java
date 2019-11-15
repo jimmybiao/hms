@@ -1,10 +1,10 @@
 package com.jimmy.pojo;
 
-public class Investment extends BasePojo{
+public class Expense extends BasePojo{
 
 	@Override
 	public String toString() {
-		return "Investment [getId()=" + getId() + ", getCategory()=" + getCategory() + ", getSubcategory()="
+		return "Expense [getId()=" + getId() + ", getCategory()=" + getCategory() + ", getSubcategory()="
 				+ getSubcategory() + ", getCreatedTime()=" + getCreatedTime() + ", getUpdatedTime()=" + getUpdatedTime()
 				+ ", getRemark()=" + getRemark() + ", getAmount()=" + getAmount() + ", getClass()=" + getClass()
 				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
