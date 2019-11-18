@@ -38,7 +38,7 @@
 </head>
 <body>
 <div class="inputdiv">
-	<form action="addNewExpense" method="POST">
+	<form action="${ctp }/addNewExpense" method="POST">
 		<table align="center" border="0" width="800px">
 			<tr>
 				<td colspan="3" align="center"><font size="10">Home
@@ -47,7 +47,7 @@
 			<tr height="80">
 				<td><a href="index.jsp">Index</a></td>
 				<td align="center"><a href="${ctp }/investment">Investment</a></td>
-				<td><a href="income">Income</a></td>
+				<td><a href="${ctp }/income">Income</a></td>
 			</tr>
 			<tr>
 				<td width="10%"><b>Category:</b></td>

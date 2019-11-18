@@ -17,6 +17,7 @@
 		<mvc:view-controller path="/expense" view-name="expense"/>
 		<mvc:view-controller path="/investment" view-name="investment"/>
 		<mvc:view-controller path="/income" view-name="income"/>
+		<mvc:view-controller path="/docs" view-name="docs"/>
 		<mvc:annotation-driven />
 		<mvc:resources location="/WEB-INF/css/" mapping="/css/**"></mvc:resources>
     	<mvc:resources location="/WEB-INF/js/" mapping="/js/**"></mvc:resources>
@@ -37,6 +38,10 @@
 		</bean>
 		
 		<tx:annotation-driven/>
+		
+		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<property name="defaultEncoding" value="utf-8"></property>
+		</bean>
 
 	<bean id="viewResolver"
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">

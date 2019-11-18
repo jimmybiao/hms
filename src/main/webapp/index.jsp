@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<%
+	pageContext.setAttribute("ctp", request.getContextPath());
+ %>
 <script type="text/javascript" src="js/jquery-2.1.4.js"></script>
 <%
 	pageContext.setAttribute("ctp", request.getContextPath());
@@ -38,8 +41,10 @@
 			<tr height="80">
 				<td><a href="investment">Investment</a></td>
 				<td align="center"><a href="expense">Expense</a></td>
-				<td><a href="income">Income</a></td>
+				<td align="center"><a href="income">Income</a></td>
+				<td><a href="${ctp }/docs">Documents</a></td>
 			</tr>
+		
 			<tr>
 				<td width="10%"><b>Title:</b></td>
 				<td colspan="2"><textarea rows="1" cols="50" name="title"
