@@ -1,6 +1,8 @@
 package com.jimmy.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.jimmy.pojo.Investment;
 import com.jimmy.service.InvestmentService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 public class InvestmentController {
@@ -31,8 +34,8 @@ public class InvestmentController {
 		Double amount =Double.parseDouble( request.getParameter("am"));
 		String investDt = request.getParameter("indt");
 		String remark = request.getParameter("re");
-
-		Object[] params= {category,subcategory,amount,investDt,remark};
+		
+		Object[] params= {category,subcategory,amount,investDt,remark,investDt};
 
 		investmentService.addInvestment(params);
 		

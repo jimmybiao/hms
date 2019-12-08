@@ -1,6 +1,8 @@
 package com.jimmy.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.jimmy.pojo.Memo;
 import com.jimmy.service.MemoService;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 @Controller
 public class MemoController {
@@ -31,8 +34,9 @@ public class MemoController {
 		String title=request.getParameter("t");
 		Double amt=Double.parseDouble(request.getParameter("am"));
 		String remark=request.getParameter("re");
+		String dt=new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		
-		Object[] objs= {title,amt,remark};
+		Object[] objs= {title,amt,remark,dt};
 		
 		memoService.addMemo(objs);
 		

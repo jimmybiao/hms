@@ -19,7 +19,7 @@ public class MemoDao {
 	private JdbcTemplate jdbcTemplate;
 	
 	 public void addMemo(Object[] objs) {
-		String sqlAdd="insert into memo(title,amount,remark) values(?,?,?)";
+		String sqlAdd="insert into memo(title,amount,remark,memo_date) values(?,?,?,?)";
 		jdbcTemplate.update(sqlAdd, objs);
 	}
 	

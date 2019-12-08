@@ -19,7 +19,7 @@ public class InvestmentDao {
 	private JdbcTemplate jdbcTemplate;
 
 	public void addInvestment(Object[] params) {
-		String sqlAdd="insert into investment(invest_category,invest_subcategory,amount,invest_date,remark) values(?,?,?,?,?)";
+		String sqlAdd="insert into investment(invest_category,invest_subcategory,amount,invest_date,remark,updated_date) values(?,?,?,?,?,?)";
 		jdbcTemplate.update(sqlAdd, params);
 	}
 

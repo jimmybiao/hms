@@ -14,6 +14,7 @@ public class InvestmentRowMapper implements RowMapper<Investment>{
 		investment.setId(rs.getInt("id"));
 		investment.setCategory(rs.getString("invest_category"));
 		investment.setSubcategory(rs.getString("invest_subcategory"));
+		investment.setAmount(rs.getDouble("amount"));
 		investment.setRemark(rs.getString("remark"));
 		investment.setCreatedTime(rs.getString("invest_date").split(" ")[0]);
 		return investment;
