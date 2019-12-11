@@ -1,3 +1,4 @@
 springmvc+jdbcTemplate(tx)+mysql
 
 1.Memo
+2. https://www.jianshu.com/p/4b95058088c2
