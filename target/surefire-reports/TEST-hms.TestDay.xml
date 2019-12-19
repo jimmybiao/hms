@@ -26,7 +26,7 @@
 "/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="os.name" value="Mac OS X"/>
-    <property name="classworlds.conf" value="/Users/biaojimmy/Documents/Dev/gitprojects/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf5806515028934765023.tmp"/>
+    <property name="classworlds.conf" value="/Users/biaojimmy/Documents/Dev/gitprojects/.metadata/.plugins/org.eclipse.m2e.launching/launches/m2conf2264361597932082351.tmp"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
     <property name="java.library.path" value="/Users/biaojimmy/Library/Java/Extensions:/Library/Java/Extensions:/Network/Library/Java/Extensions:/System/Library/Java/Extensions:/usr/lib/java:."/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
@@ -44,7 +44,7 @@
     <property name="java.vm.specification.version" value="1.8"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_162.jdk/Contents/Home/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B -gs /Users/biaojimmy/Documents/Dev/apache-maven-3.6.1/conf/settings.xml -s /Users/biaojimmy/Documents/Dev/mavenRepo/settings.xml clean install"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -B -gs /Users/biaojimmy/Documents/Dev/apache-maven-3.6.1/conf/settings.xml -s /Users/biaojimmy/Documents/Dev/mavenRepo/settings.xml clean package"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.lwawt.macosx.LWCToolkit"/>

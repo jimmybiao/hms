@@ -195,10 +195,14 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayInvestments").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayInvestments").append("<input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;						
 					}					
 					);
+					if(sum>0)
+						$("#displayInvestments").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;
@@ -238,10 +242,14 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayInvestments").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayInvestments").append("<div><input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
-					}					
+						$("#displayInvestments").append("<input type='checkbox' name='investmentDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/investmentEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;
+					}	
 					);
+					if(sum>0)
+						$("#displayInvestments").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;

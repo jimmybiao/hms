@@ -63,6 +63,7 @@
 				<td colspan="2"><select id="subcategory">
 					<option value="Grocery">Grocery</option>
 					<option value="Household goods">Household goods</option>
+					<option value="House Loan">House Loan</option>
 					<option value="Property management fees">Property management fees</option>
 					<option value="Repairs">Repairs</option>
 					<option value="Learning">Learning</option>

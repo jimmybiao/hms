@@ -67,6 +67,7 @@
 				<td colspan="2"><select id="subcategory">
 					<option value="Grocery">Grocery</option>
 					<option value="Household goods">Household goods</option>
+					<option value="House Loan">House Loan</option>
 					<option value="Property management fees">Property management fees</option>
 					<option value="Repairs">Repairs</option>
 					<option value="Learning">Learning</option>
@@ -133,6 +134,7 @@
 				<option value=""></option>
 					<option value="Grocery">Grocery</option>
 					<option value="Household goods">Household goods</option>
+					<option value="House Loan">House Loan</option>
 					<option value="Property management fees">Property management fees</option>
 					<option value="Repairs">Repairs</option>
 					<option value="Learning">Learning</option>
@@ -209,10 +211,14 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayExpense").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayExpense").append("<div><input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>ExpenseDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayExpense").append("<input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>ExpenseDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;						
 					}					
 					);
+					if(sum>0)
+						$("#displayExpense").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;
@@ -252,10 +258,15 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayExpense").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayExpense").append("<div><input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayExpense").append("<input type='checkbox' name='expenseDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>  <b>Subcategory:</b> <font color='blue'>"+item.subcategory+"</font>  <b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>InvestDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/expenseEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;
+						
 					}					
 					);
+					if(sum>0)
+						$("#displayExpense").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;

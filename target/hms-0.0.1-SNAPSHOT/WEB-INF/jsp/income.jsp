@@ -170,10 +170,14 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayIncome").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayIncome").append("<div><input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayIncome").append("<input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;						
 					}					
 					);
+					if(sum>0)
+						$("#displayIncome").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;
@@ -210,10 +214,14 @@
 				success:function(data){
 					//console.log(data);
 					$("#displayIncome").empty();
+					var sum=0;
 					$.each(data,function(index,item){
-						$("#displayIncome").append("<div><input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
+						$("#displayIncome").append("<input type='checkbox' name='incomeDel' value='"+item.id+"'/><b>Category:</b><font color='blue'> "+item.category+"</font>&nbsp;&nbsp;<b>Amount:</b> <font color='blue'>"+item.amount+"</font>&nbsp;&nbsp;<b>IncomeDate:&nbsp;</b><font color='blue'>"+item.createdTime+"</font>&nbsp;&nbsp;<b>Remark:</b> <font color='blue'>"+item.remark+"</font>&nbsp;&nbsp;<a href='${ctp}/incomeEdit/"+item.id+"'>Edit</a><br/>");
+						sum+=item.amount;						
 					}					
 					);
+					if(sum>0)
+						$("#displayIncome").append("<br/>Sum: "+sum);
 				}
 			});
 			return false;
