@@ -45,7 +45,7 @@
 						Management System</font></td>
 			</tr>
 			<tr height="80">
-				<td><a href="index.jsp">Index</a></td>
+				<td><a href="${ctp }/index.jsp">Index</a></td>
 				<td align="center"><a href="${ctp }/investment">Investment</a></td>
 				<td><a href="${ctp }/income">Income</a></td>
 			</tr>

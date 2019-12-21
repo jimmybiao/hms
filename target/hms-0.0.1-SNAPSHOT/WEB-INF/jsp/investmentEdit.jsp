@@ -9,7 +9,7 @@
 	pageContext.setAttribute("ctp", request.getContextPath());
 	pageContext.setAttribute("basePath", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort());
  %>
-<script type="text/javascript" src="${basePath }/js/jquery-2.1.4.js"></script>
+ <script type="text/javascript" src="${ctp}/js/jquery-2.1.4.js"></script>
 <script type="text/javascript">
 		
  	function valid(){
@@ -41,8 +41,8 @@
 						Management System</font></td>
 			</tr>
 			<tr height="80">
-				<td><a href="index.jsp">Index</a></td>
-				<td><a href="${basePath}/investment">Investment</a></td>
+				<td><a href="${ctp }/index.jsp">Index</a></td>
+				<td><a href="${ctp}/investment">Investment</a></td>
 				<td></td>
 			</tr>
 			<tr>

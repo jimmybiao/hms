@@ -8,7 +8,7 @@
 	pageContext.setAttribute("ctp", request.getContextPath());
 	pageContext.setAttribute("basePath", request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort());
  %>
-<script type="text/javascript" src="${basePath }/js/jquery-2.1.4.js"></script>
+<script type="text/javascript" src="${ctp}/js/jquery-2.1.4.js"></script>
 <script type="text/javascript">
 	function valid() {
 		var val = $("#title").val();
@@ -30,7 +30,7 @@
 </head>
 <body>
 	<div class="inputdiv">
-		<form action="${basePath}/memoUpdate/${requestScope.id}" method="POST">
+		<form action="${ctp}/memoUpdate/${requestScope.id}" method="POST">
 			<table align="center" border="0" width="800px">
 				<tr>
 					<td colspan="3" align="center"><font size="10">Home
