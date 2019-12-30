@@ -202,7 +202,7 @@
 					}					
 					);
 					if(sum>0)
-						$("#displayInvestments").append("<br/>Sum: "+sum);
+						$("#displayInvestments").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;
@@ -249,7 +249,7 @@
 					}	
 					);
 					if(sum>0)
-						$("#displayInvestments").append("<br/>Sum: "+sum);
+						$("#displayInvestments").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;

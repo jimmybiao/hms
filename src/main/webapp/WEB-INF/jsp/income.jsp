@@ -177,7 +177,7 @@
 					}					
 					);
 					if(sum>0)
-						$("#displayIncome").append("<br/>Sum: "+sum);
+						$("#displayIncome").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;
@@ -221,7 +221,7 @@
 					}					
 					);
 					if(sum>0)
-						$("#displayIncome").append("<br/>Sum: "+sum);
+						$("#displayIncome").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;

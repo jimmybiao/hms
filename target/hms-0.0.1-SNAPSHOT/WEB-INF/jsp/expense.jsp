@@ -218,7 +218,7 @@
 					}					
 					);
 					if(sum>0)
-						$("#displayExpense").append("<br/>Sum: "+sum);
+						$("#displayExpense").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;
@@ -266,7 +266,7 @@
 					}					
 					);
 					if(sum>0)
-						$("#displayExpense").append("<br/>Sum: "+sum);
+						$("#displayExpense").append("<br/>Sum: "+sum.toFixed(2));
 				}
 			});
 			return false;
